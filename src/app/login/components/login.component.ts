@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: this.loginForm.get('email').value,
       image: this.webcamImage.imageAsBase64
     }
-    this.userService.registerUser$Response({body: loginUser}).toPromise().then( response => {
+    this.userService.loginUser$Response({body: loginUser}).toPromise().then( response => {
       if (response.status === 200) {
         this.showLoading = false;
       } else {
