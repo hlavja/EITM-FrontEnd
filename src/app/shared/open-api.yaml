@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: FaceID App
-    url: https://i8jcq8noel.execute-api.eu-central-1.amazonaws.com
+    url: http://localhost:4200/api
 info:
   description: FaceId APP
   version: "1.0.0"
@@ -33,6 +33,23 @@ paths:
         200:
           description: |
             Registration success
+  /login:
+    post:
+      tags:
+        - user
+      summary: Login user
+      operationId: loginUser
+      description: |
+        Login user into system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginDTO'
+      responses:
+        200:
+          description: |
+            Registration success
 components:
   schemas:
     UserRegistrationDTO:
@@ -47,5 +64,13 @@ components:
         lastName:
           type: string
           example: Hlavac
+        image:
+          type: string
+    UserLoginDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          example: qhlaj@aimtecglobal.com
         image:
           type: string

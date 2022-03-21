@@ -9,6 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { UserLoginDto } from '../models/user-login-dto';
 import { UserRegistrationDto } from '../models/user-registration-dto';
 
 
@@ -76,6 +77,60 @@ export class UserService extends BaseService {
   }): Observable<void> {
 
     return this.registerUser$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
+   * Path part for operation loginUser
+   */
+  static readonly LoginUserPath = '/login';
+
+  /**
+   * Login user.
+   *
+   * Login user into system
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `loginUser()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  loginUser$Response(params?: {
+    body?: UserLoginDto
+  }): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, UserService.LoginUserPath, 'post');
+    if (params) {
+      rb.body(params.body, 'application/json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*'
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * Login user.
+   *
+   * Login user into system
+   *
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `loginUser$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  loginUser(params?: {
+    body?: UserLoginDto
+  }): Observable<void> {
+
+    return this.loginUser$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }

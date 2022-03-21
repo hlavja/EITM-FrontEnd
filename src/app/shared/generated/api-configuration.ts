@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'https://i8jcq8noel.execute-api.eu-central-1.amazonaws.com';
+  rootUrl: string = 'http://localhost:4200/api';
 }
 
 /**

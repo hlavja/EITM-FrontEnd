@@ -1,0 +1,11 @@
+{
+  "/api": {
+    "target": "https://i8jcq8noel.execute-api.eu-central-1.amazonaws.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

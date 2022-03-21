@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
-import {Router} from "@angular/router";
 import { WebcamImage } from 'ngx-webcam';
+import {UserService} from "../../shared/generated/services/user.service";
+import {UserLoginDto} from "../../shared/generated/models/user-login-dto";
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   webcamImage: WebcamImage;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private userService: UserService
   ) {
     this.subscription[0] = this.disableSubmitButton$.subscribe(submitted => this.submitted = submitted);
   }
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.loginForm.valid) {
       this.showError = false;
       this.showLoading = true;
-      this.login(this.loginForm);
+      this.login();
     } else {
       this.submitted = false;
       this.showError = true;
@@ -54,8 +56,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  login(loginForm: FormGroup): void {
-    console.log(this.webcamImage.imageAsBase64)
+  login(): void {
+    console.log(this.webcamImage.imageAsBase64);
+    let loginUser: UserLoginDto = {
+      email: this.loginForm.get('email').value,
+      image: this.webcamImage.imageAsBase64
+    }
+    this.userService.registerUser$Response({body: loginUser}).toPromise().then( response => {
+      if (response.status === 200) {
+        this.showLoading = false;
+      } else {
+        this.showLoading = false;
+      }
+    }).catch(err => {
+      this.showLoading = false;
+    });
 
   }
 
