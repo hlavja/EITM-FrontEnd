@@ -1,0 +1,51 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: FaceID App
+    url: https://i8jcq8noel.execute-api.eu-central-1.amazonaws.com
+info:
+  description: FaceId APP
+  version: "1.0.0"
+  title: FaceId API
+  contact:
+    email: hlavjah@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: user
+    description: User operations
+paths:
+  /register:
+    post:
+      tags:
+        - user
+      summary: Register user
+      operationId: registerUser
+      description: |
+        Register user into system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationDTO'
+      responses:
+        200:
+          description: |
+            Registration success
+components:
+  schemas:
+    UserRegistrationDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          example: qhlaj@aimtecglobal.com
+        firstName:
+          type: string
+          example: Jakub
+        lastName:
+          type: string
+          example: Hlavac
+        image:
+          type: string

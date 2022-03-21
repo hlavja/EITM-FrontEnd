@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+  </div>
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3>Login form</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <webcam [trigger]="triggerObservable"
+                      (imageCapture)="handleImage($event)"
+                      [allowCameraSwitch]="false"
+              ></webcam>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" formControlName="email" class="form-control" id="email" autocomplete="username"/>
+              <span class="text-danger"
+                    *ngIf="(loginFormControl.email.touched || submitted) && loginFormControl.email.errors?.required">
+                                Email is required
+                            </span>
+              <span class="text-danger"
+                    *ngIf="loginFormControl.email.touched && loginFormControl.email.errors?.email">
+                                Enter a valid email address
+                            </span>
+            </div>
+            <div class="form-group">
+              <button [disabled]="showLoading" class="btn btn-primary">
+                <span *ngIf="showLoading" class="spinner-border spinner-border-sm mr-1"></span>
+                Log in
+              </button>
+            </div>
+            <div class="form-group">
+              <span class="text-danger"
+                    *ngIf="showError">
+                                {{ errorMessage }}
+                            </span>
+            </div>
+          </form>
+          Do not have your account yet?
+          <a routerLink="/register"> Register NOW! </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
