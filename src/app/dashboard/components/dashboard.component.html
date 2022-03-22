@@ -1,1 +1,12 @@
-<p>dashboard works!</p>
+<p-menubar>
+  <ng-template pTemplate="start">
+    {{userLoginDto?.email}} |  {{userLoginDto?.firstName}} |  {{userLoginDto?.lastName}}
+  </ng-template>
+  <ng-template pTemplate="end">
+    <button pButton pRipple type="button" icon="pi pi-power-off" class="p-button-outlined p-button-rounded p-button-danger" (click)="logout()"></button>
+  </ng-template>
+</p-menubar>
+Registration image: <p-image [src]="image" width="250" [preview]="true"></p-image>
+Logins:
+  {{userLoginDto?.logins | json}}
+

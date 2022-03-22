@@ -3,6 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { WebcamImage } from 'ngx-webcam';
 import {UserService} from "../../shared/generated/services/user.service";
+import {MessageService} from "primeng/api";
+import {Router} from "@angular/router";
+import {AuthService} from "../../guard/auth.service";
+import {map} from "rxjs/operators";
+import {HttpResponse} from "@angular/common/http";
 import {UserLoginDto} from "../../shared/generated/models/user-login-dto";
 
 @Component({
@@ -26,7 +31,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService,
+    private router: Router,
+    private authService: AuthService
   ) {
     this.subscription[0] = this.disableSubmitButton$.subscribe(submitted => this.submitted = submitted);
   }
@@ -36,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.authService.isLoggedIn();
   }
 
   ngOnDestroy(): void{
@@ -57,18 +66,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
-    console.log(this.webcamImage.imageAsBase64);
     let loginUser: UserLoginDto = {
       email: this.loginForm.get('email').value,
       image: this.webcamImage.imageAsBase64
     }
-    this.userService.loginUser$Response({body: loginUser}).toPromise().then( response => {
-      if (response.status === 200) {
-        this.showLoading = false;
-      } else {
-        this.showLoading = false;
-      }
-    }).catch(err => {
+    this.userService.loginUser$Response({body: loginUser}).pipe(
+      map((response: HttpResponse<any>) => {
+        if (response.status === 200) {
+          this.authService.login(response.body);
+          this.showLoading = false;
+        } else {
+          this.messageService.add({severity:'error', summary: 'Error', detail: 'User not found!'});
+          this.showLoading = false;
+        }
+      })
+    ).toPromise().then().catch(err => {
+      console.log(err);
+      this.messageService.add({severity:'error', summary: 'Error', detail: err.status + ": " + err.statusText});
       this.showLoading = false;
     });
 
@@ -81,5 +95,4 @@ export class LoginComponent implements OnInit, OnDestroy {
   handleImage(webcamImage: WebcamImage) {
     this.webcamImage = webcamImage;
   }
-
 }

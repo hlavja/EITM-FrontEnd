@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WebcamImage} from "ngx-webcam";
 import {UserService} from "../../shared/generated/services/user.service";
 import {UserRegistrationDto} from "../../shared/generated/models/user-registration-dto";
+import {MessageService} from "primeng/api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -28,7 +30,9 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.subscription[0] = this.disableSubmitButton$.subscribe(submitted => this.submitted = submitted);
   }
@@ -59,7 +63,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    console.log(this.webcamImage.imageAsBase64);
     let newUser: UserRegistrationDto = {
       email: this.registerFrom.get('email').value,
       firstName: this.registerFrom.get('firstName').value,
@@ -69,10 +72,17 @@ export class RegisterComponent implements OnInit {
     this.userService.registerUser$Response({body: newUser}).toPromise().then( response => {
       if (response.status === 200) {
         this.showLoading = false;
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Registration completed!'});
+        setTimeout(() => {
+            this.router.navigate(['/login']).then(r => console.log(r));
+          }, 1000);
       } else {
+        this.messageService.add({severity:'error', summary: 'Error', detail: 'Registration error!'});
         this.showLoading = false;
       }
     }).catch(err => {
+      console.log(err);
+      this.messageService.add({severity:'error', summary: 'Error', detail: err.status + ": " + err.statusText + " | " + err?.error});
       this.showLoading = false;
     });
   }

@@ -5,6 +5,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {WebcamModule} from "ngx-webcam";
 import {InputTextModule} from "primeng/inputtext";
 import {RouterModule} from "@angular/router";
+import {ToastModule} from "primeng/toast";
 
 
 
@@ -17,7 +18,8 @@ import {RouterModule} from "@angular/router";
     ReactiveFormsModule,
     WebcamModule,
     InputTextModule,
-    RouterModule
+    RouterModule,
+    ToastModule
   ]
 })
 export class RegisterModule { }

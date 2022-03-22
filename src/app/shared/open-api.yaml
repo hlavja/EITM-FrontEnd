@@ -29,6 +29,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserRegistrationDTO'
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:736260876227:function:Register/invocations"
+        connectionType: "INTERNET"
       responses:
         200:
           description: |
@@ -46,10 +52,67 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/UserLoginDTO'
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:736260876227:function:Login/invocations"
+        connectionType: "INTERNET"
       responses:
         200:
           description: |
-            Registration success
+            Login success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+  /logout:
+    post:
+      tags:
+        - user
+      summary: Logout user
+      operationId: logoutUser
+      description: |
+        Logout user from system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:736260876227:function:Logout/invocations"
+        connectionType: "INTERNET"
+      responses:
+        200:
+          description: |
+            Logout success
+  /dashboard:
+    get:
+      tags:
+        - user
+      summary: User logins
+      operationId: dashboardData
+      description: |
+        Get user logins and logouts
+      x-amazon-apigateway-integration:
+        payloadFormatVersion: "2.0"
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:736260876227:function:LoggedUsers/invocations"
+        connectionType: "INTERNET"
+      responses:
+        200:
+          description: Succes get user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
 components:
   schemas:
     UserRegistrationDTO:
@@ -57,7 +120,7 @@ components:
       properties:
         email:
           type: string
-          example: qhlaj@aimtecglobal.com
+          example: hlavja@students.zcu.cz
         firstName:
           type: string
           example: Jakub
@@ -71,6 +134,24 @@ components:
       properties:
         email:
           type: string
-          example: qhlaj@aimtecglobal.com
+          example: hlavja@students.zcu.cz
         image:
           type: string
+    UserDTO:
+      type: object
+      properties:
+        email:
+          type: string
+          example: hlavja@students.zcu.cz
+        firstName:
+          type: string
+          example: Jakub
+        lastName:
+          type: string
+          example: Hlavac
+        image:
+          type: string
+        logins:
+          $ref: '#/components/schemas/Logins'
+    Logins:
+      type: array

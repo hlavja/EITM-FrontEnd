@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import {LoginModule} from "./login/login.module";
 import {RegisterModule} from "./register/register.module";
 import {DashboardModule} from "./dashboard/dashboard.module";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -16,9 +19,11 @@ import {DashboardModule} from "./dashboard/dashboard.module";
     AppRoutingModule,
     LoginModule,
     RegisterModule,
-    DashboardModule
+    DashboardModule,
+    ToastModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
