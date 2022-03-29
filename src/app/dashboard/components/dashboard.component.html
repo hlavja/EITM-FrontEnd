@@ -1,12 +1,59 @@
 <p-menubar>
   <ng-template pTemplate="start">
-    {{userLoginDto?.email}} |  {{userLoginDto?.firstName}} |  {{userLoginDto?.lastName}}
   </ng-template>
   <ng-template pTemplate="end">
     <button pButton pRipple type="button" icon="pi pi-power-off" class="p-button-outlined p-button-rounded p-button-danger" (click)="logout()"></button>
   </ng-template>
 </p-menubar>
-Registration image: <p-image [src]="image" width="250" [preview]="true"></p-image>
-Logins:
-  {{userLoginDto?.logins | json}}
 
+<div class="container">
+  <div class="main-body">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <p-image [src]="image" width="250" [preview]="true"></p-image>
+              <!--<img [src]="image" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">-->
+              <div class="mt-3">
+                <h4>{{userLoginDto?.firstName}} {{userLoginDto?.lastName}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="d-flex align-items-center mb-3">Logins</h5>
+                {{userLoginDto.logins | json}}
+                <p>Web Design</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Website Markup</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>One Page</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Mobile Template</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Backend API</p>
+                <div class="progress" style="height: 5px">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

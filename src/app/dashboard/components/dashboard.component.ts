@@ -7,6 +7,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {map} from "rxjs/operators";
 import {HttpResponse} from "@angular/common/http";
 import {MessageService} from "primeng/api";
+import {LoginDashboardModel} from "../models/loginDashboardModel.model";
+import moment from "moment";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +19,7 @@ export class DashboardComponent implements OnInit {
 
   userLoginDto: UserDto;
   image: any;
+  userLogins: Array<LoginDashboardModel> = [];
 
   constructor(
     private router: Router,
@@ -28,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.userLoginDto = this.authService.getUserFromStorage();
-    console.log(this.userLoginDto.logins);
+    this.mapLogins();
     this.image = 'data:image/jpg;base64,' + (this.sanitizer.bypassSecurityTrustResourceUrl(this.userLoginDto.image) as any).changingThisBreaksApplicationSecurity;
   }
 
@@ -44,5 +47,55 @@ export class DashboardComponent implements OnInit {
     ).toPromise().then().catch(err => {
       this.messageService.add({severity:'error', summary: 'Error', detail: err.status + ": " + err.statusText});
     });
+  }
+
+  private mapLogins() {
+    Object.entries(this.userLoginDto.logins).forEach(([key, value]) => {
+      let prefix = key;
+      prefix = prefix.replace(/[0-9]/, '');
+      let id = key;
+      id = id.replace('login', '');
+      id = id.replace('logout', '');
+      if (prefix == 'login') {
+        let tmp = this.userLogins.find(login => login.logoutId == id);
+        if (tmp == undefined) {
+          let object : LoginDashboardModel = {
+            loginId: id,
+            from: value
+          };
+          this.userLogins.push(object);
+        } else {
+          tmp.from = value;
+          tmp.loginId = id;
+          this.countHoursAndMinutes(tmp);
+        }
+      }
+      if (prefix == 'logout') {
+        let tmp = this.userLogins.find(login => login.loginId == id);
+        if (tmp == undefined) {
+          let object : LoginDashboardModel = {
+            logoutId: id,
+            to: value
+          };
+          this.userLogins.push(object);
+        } else {
+          tmp.to = value;
+          tmp.logoutId = id;
+          this.countHoursAndMinutes(tmp);
+        }
+      }
+    });
+    console.log(this.userLogins);
+  }
+
+  countHoursAndMinutes(tmp: LoginDashboardModel) {
+    let hours = moment.duration(moment(tmp.to).diff(moment(tmp.from))).asHours();
+    if (hours < 1) {
+      tmp.numberMinutes = Math.floor(hours * 60);
+      tmp.numberHours = 0;
+    } else {
+      tmp.numberHours = Math.floor(hours);
+      tmp.numberMinutes = Math.floor((hours - tmp.numberHours) * 60);
+    }
   }
 }
