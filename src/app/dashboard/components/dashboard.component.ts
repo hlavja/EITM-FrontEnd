@@ -75,11 +75,11 @@ export class DashboardComponent implements OnInit {
         if (tmp == undefined) {
           let object : LoginDashboardModel = {
             logoutId: id,
-            to: value
+            to: value.replace('[UTC]', '')
           };
           this.userLogins.push(object);
         } else {
-          tmp.to = value;
+          tmp.to = value.replace('[UTC]', '');
           tmp.logoutId = id;
           this.countHoursAndMinutes(tmp);
         }
