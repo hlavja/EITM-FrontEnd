@@ -28,14 +28,14 @@
               <div class="card-body">
                 <h5 class="d-flex align-items-center mb-3">Logins</h5>
                   <ng-container *ngFor="let oneLogin of userLogins">
-                    <p>From: {{oneLogin.from | date: "dd. MM. yyyy HH:mm"}} - To: {{oneLogin.to | date: "dd. MM. yyyy HH:mm"}}</p>
-                    Hours: {{oneLogin.numberHours}}
+                    <p>From: {{oneLogin?.from | date: "dd. MM. yyyy HH:mm"}} - To: {{oneLogin?.to | date: "dd. MM. yyyy HH:mm"}}</p>
+                    Hours: {{oneLogin?.numberHours}}
                     <div class="progress mb-3" style="height: 5px">
-                      <div class="progress-bar bg-success" role="progressbar" [style.width]="oneLogin.numberHours+'%'" [attr.aria-valuenow]="oneLogin.numberHours" aria-valuemin="0" aria-valuemax="24"></div>
+                      <div class="progress-bar bg-success" role="progressbar" [style.width]="oneLogin?.numberHours+'%'" [attr.aria-valuenow]="oneLogin?.numberHours" aria-valuemin="0" aria-valuemax="24"></div>
                     </div>
-                    Minutes: {{oneLogin.numberMinutes}}
+                    Minutes: {{oneLogin?.numberMinutes}}
                     <div class="progress mb-3" style="height: 5px">
-                      <div class="progress-bar bg-info" role="progressbar" [style.width]="oneLogin.numberMinutes+'%'" [attr.aria-valuenow]="oneLogin.numberMinutes" aria-valuemin="0" aria-valuemax="60"></div>
+                      <div class="progress-bar bg-info" role="progressbar" [style.width]="oneLogin?.numberMinutes+'%'" [attr.aria-valuenow]="oneLogin?.numberMinutes" aria-valuemin="0" aria-valuemax="60"></div>
                     </div>
                     <hr class="my-4">
                   </ng-container>
