@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
-    this.userLogins.sort((a, b) => a.loginId > b.loginId ? 1 : -1);
+    this.userLogins.sort((a, b) => a.loginId < b.loginId ? 1 : -1);
     console.log(this.userLogins);
   }
 
