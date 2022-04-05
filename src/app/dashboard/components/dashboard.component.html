@@ -68,22 +68,22 @@
                 <div class="row gx-1 justify-content-center">
 
                   <div class="col-lg-4 col-md-12">
-                    {{userAdmin.firstName}} {{userAdmin.lastName}}
+                    {{userAdmin?.firstName}} {{userAdmin?.lastName}}
                     <hr class="my-4">
-                    <p-image [src]="getImage(userAdmin.image)" width="250" [preview]="true"></p-image>
+                    <p-image [src]="getImage(userAdmin?.image)" width="250" [preview]="true"></p-image>
                   </div>
 
                   <div class="col-lg-4 col-md-6">
                     Status:
                     <br>
-                    <span *ngIf="userAdmin.loggedIn" [class]="'customer-badge status-' + userAdmin.loggedIn">LOGGED IN</span>
-                    <span *ngIf="!userAdmin.loggedIn" [class]="'customer-badge status-' + userAdmin.loggedIn">LOGGED OUT</span>
+                    <span *ngIf="userAdmin?.loggedIn" [class]="'customer-badge status-' + userAdmin?.loggedIn">LOGGED IN</span>
+                    <span *ngIf="!userAdmin?.loggedIn" [class]="'customer-badge status-' + userAdmin?.loggedIn">LOGGED OUT</span>
                   </div>
 
                   <div class="col-lg-4 col-md-6">
                     Last logged in:
                     <br>
-                    {{getLastLogin(userAdmin.logins)}}
+                    {{getLastLogin(userAdmin?.logins)}}
                   </div>
 
                 </div>

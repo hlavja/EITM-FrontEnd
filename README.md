@@ -29,3 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ng-openapi-gen --input src/app/shared/open-api.yaml --output src/app/shared/generated
+
+
+docker build -t eitm/faceapp . && docker run -it eitm/faceapp
