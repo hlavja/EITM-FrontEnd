@@ -104,7 +104,7 @@ paths:
         payloadFormatVersion: "2.0"
         type: "aws_proxy"
         httpMethod: "POST"
-        uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:736260876227:function:LoggedUsers/invocations"
+        uri: "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:736260876227:function:Dashboard/invocations"
         connectionType: "INTERNET"
       responses:
         200:
@@ -112,7 +112,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserDTO'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDTO'
 components:
   schemas:
     UserRegistrationDTO:
@@ -153,5 +155,7 @@ components:
           type: string
         logins:
           $ref: '#/components/schemas/Logins'
+        loggedIn:
+          type: boolean
     Logins:
       type: array

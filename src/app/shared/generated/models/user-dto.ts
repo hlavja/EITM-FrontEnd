@@ -6,5 +6,6 @@ export interface UserDto {
   firstName?: string;
   image?: string;
   lastName?: string;
+  loggedIn?: boolean;
   logins?: Logins;
 }

@@ -14,43 +14,39 @@ export class AuthService {
   ) { }
 
   logout() {
-    sessionStorage.removeItem('userEmail');
-    sessionStorage.removeItem('firstName');
-    sessionStorage.removeItem('lastName');
-    sessionStorage.removeItem('image');
-    sessionStorage.removeItem('logins');
+    localStorage.clear();
     this.router.navigate(['/login']).then(r => console.log(r));
   }
 
   login(body: string) {
     const user = body as UserDto;
-    sessionStorage.setItem('userEmail', user.email);
-    sessionStorage.setItem('firstName', user.firstName);
-    sessionStorage.setItem('lastName', user.lastName);
-    sessionStorage.setItem('image', user.image);
-    sessionStorage.setItem('logins', JSON.stringify(user.logins));
+    localStorage.setItem('userEmail', user.email);
+    localStorage.setItem('firstName', user.firstName);
+    localStorage.setItem('lastName', user.lastName);
+    localStorage.setItem('image', user.image);
+    localStorage.setItem('logins', JSON.stringify(user.logins));
     this.router.navigate(['/dashboard']).then(r => console.log(r));
   }
 
   isLoggedIn() {
-    let user: string = sessionStorage.getItem('userEmail');
+    let user: string = localStorage.getItem('userEmail');
     if (user) {
       this.router.navigate(['/dashboard']).then(r => console.log(r));
     }
   }
 
   authIsLoggedIn(): boolean {
-    let user: string = sessionStorage.getItem('userEmail');
+    let user: string = localStorage.getItem('userEmail');
     return !!user;
   }
 
   getUserFromStorage() {
     const user: UserDto = {
-      email: sessionStorage.getItem('userEmail'),
-      image: sessionStorage.getItem('image'),
-      firstName: sessionStorage.getItem('firstName'),
-      logins: JSON.parse(sessionStorage.getItem('logins')),
-      lastName: sessionStorage.getItem('lastName')
+      email: localStorage.getItem('userEmail'),
+      image: localStorage.getItem('image'),
+      firstName: localStorage.getItem('firstName'),
+      logins: localStorage.getItem('logins') ? JSON.parse(localStorage.getItem('logins')) : null,
+      lastName: localStorage.getItem('lastName')
     };
     return user;
   }

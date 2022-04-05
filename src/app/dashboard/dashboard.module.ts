@@ -6,6 +6,7 @@ import {SharedModule} from "primeng/api";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {ImageModule} from "primeng/image";
+import {TabViewModule} from "primeng/tabview";
 
 
 
@@ -19,7 +20,8 @@ import {ImageModule} from "primeng/image";
     SharedModule,
     ButtonModule,
     RippleModule,
-    ImageModule
+    ImageModule,
+    TabViewModule
   ]
 })
 export class DashboardModule { }

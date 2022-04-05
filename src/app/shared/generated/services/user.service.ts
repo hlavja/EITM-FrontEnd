@@ -210,7 +210,7 @@ export class UserService extends BaseService {
    * This method doesn't expect any request body.
    */
   dashboardData$Response(params?: {
-  }): Observable<StrictHttpResponse<UserDto>> {
+  }): Observable<StrictHttpResponse<Array<UserDto>>> {
 
     const rb = new RequestBuilder(this.rootUrl, UserService.DashboardDataPath, 'get');
     if (params) {
@@ -222,7 +222,7 @@ export class UserService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<UserDto>;
+        return r as StrictHttpResponse<Array<UserDto>>;
       })
     );
   }
@@ -238,10 +238,10 @@ export class UserService extends BaseService {
    * This method doesn't expect any request body.
    */
   dashboardData(params?: {
-  }): Observable<UserDto> {
+  }): Observable<Array<UserDto>> {
 
     return this.dashboardData$Response(params).pipe(
-      map((r: StrictHttpResponse<UserDto>) => r.body as UserDto)
+      map((r: StrictHttpResponse<Array<UserDto>>) => r.body as Array<UserDto>)
     );
   }
 

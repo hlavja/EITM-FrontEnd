@@ -2,48 +2,94 @@
   <ng-template pTemplate="start">
   </ng-template>
   <ng-template pTemplate="end">
-    <button pButton pRipple type="button" icon="pi pi-power-off" class="p-button-outlined p-button-rounded p-button-danger" (click)="logout()"></button>
+    <button pButton pRipple type="button" icon="pi pi-power-off"
+            class="p-button-outlined p-button-rounded p-button-danger" (click)="logout()"></button>
   </ng-template>
 </p-menubar>
-
-<div class="container">
-  <div class="main-body">
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <p-image [src]="image" width="250" [preview]="true"></p-image>
-              <div class="mt-3">
-                <h4>{{userLoginDto?.firstName}} {{userLoginDto?.lastName}}</h4>
+<p-tabView (onChange)="handleChange($event)">
+  <p-tabPanel header="User profile" leftIcon="pi pi-user">
+    <div class="container">
+      <div class="main-body">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <p-image [src]="image" width="250" [preview]="true"></p-image>
+                  <div class="mt-3">
+                    <h4>{{userLoginDto?.firstName}} {{userLoginDto?.lastName}}</h4>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="d-flex align-items-center mb-3">Logins</h5>
-                  <ng-container *ngFor="let oneLogin of userLogins">
-                    <p>From: {{oneLogin?.from | date: "dd. MM. yyyy HH:mm"}} - To: {{oneLogin?.to | date: "dd. MM. yyyy HH:mm"}}</p>
-                    Hours: {{oneLogin?.numberHours}}
-                    <div class="progress mb-3" style="height: 5px">
-                      <div class="progress-bar bg-success" role="progressbar" [style.width]="oneLogin?.numberHours+'%'" [attr.aria-valuenow]="oneLogin?.numberHours" aria-valuemin="0" aria-valuemax="24"></div>
-                    </div>
-                    Minutes: {{oneLogin?.numberMinutes}}
-                    <div class="progress mb-3" style="height: 5px">
-                      <div class="progress-bar bg-info" role="progressbar" [style.width]="oneLogin?.numberMinutes+'%'" [attr.aria-valuenow]="oneLogin?.numberMinutes" aria-valuemin="0" aria-valuemax="60"></div>
-                    </div>
-                    <hr class="my-4">
-                  </ng-container>
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="d-flex align-items-center mb-3">Logins</h5>
+                    <ng-container *ngFor="let oneLogin of userLogins">
+                      <p>From: {{oneLogin?.from | date: "dd. MM. yyyy HH:mm"}} -
+                        To: {{oneLogin?.to | date: "dd. MM. yyyy HH:mm"}}</p>
+                      Hours: {{oneLogin?.numberHours}}
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             [style.width]="oneLogin?.numberHours+'%'" [attr.aria-valuenow]="oneLogin?.numberHours"
+                             aria-valuemin="0" aria-valuemax="24"></div>
+                      </div>
+                      Minutes: {{oneLogin?.numberMinutes}}
+                      <div class="progress mb-3" style="height: 5px">
+                        <div class="progress-bar bg-info" role="progressbar" [style.width]="oneLogin?.numberMinutes+'%'"
+                             [attr.aria-valuenow]="oneLogin?.numberMinutes" aria-valuemin="0" aria-valuemax="60"></div>
+                      </div>
+                      <hr class="my-4">
+                    </ng-container>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </p-tabPanel>
+  <p-tabPanel header="Users overview" leftIcon="pi pi-cog">
+    <div class="container">
+      <div class="main-body">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="d-flex align-items-center mb-3">Users</h5>
+            <ng-container *ngFor="let userAdmin of userAdministrationDto">
+              <div class="container">
+                <div class="row gx-1 justify-content-center">
+
+                  <div class="col-lg-4 col-md-12">
+                    {{userAdmin.firstName}} {{userAdmin.lastName}}
+                    <hr class="my-4">
+                    <p-image [src]="getImage(userAdmin.image)" width="250" [preview]="true"></p-image>
+                  </div>
+
+                  <div class="col-lg-4 col-md-6">
+                    Status:
+                    <br>
+                    <span *ngIf="userAdmin.loggedIn" [class]="'customer-badge status-' + userAdmin.loggedIn">LOGGED IN</span>
+                    <span *ngIf="!userAdmin.loggedIn" [class]="'customer-badge status-' + userAdmin.loggedIn">LOGGED OUT</span>
+                  </div>
+
+                  <div class="col-lg-4 col-md-6">
+                    Last logged in:
+                    <br>
+                    {{getLastLogin(userAdmin.logins)}}
+                  </div>
+
+                </div>
+              </div>
+              <hr class="my-4">
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-tabPanel>
+</p-tabView>
