@@ -55,7 +55,10 @@
     </div>
   </p-tabPanel>
   <p-tabPanel header="Users overview" leftIcon="pi pi-cog">
-    <div class="container">
+    <div class="container" style="min-height: 50vh">
+      <div class="progress-spinner" *ngIf="waitingForResponse">
+        <p-progressSpinner></p-progressSpinner>
+      </div>
       <div class="main-body">
         <div class="card">
           <div class="card-body">

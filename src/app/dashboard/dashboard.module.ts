@@ -7,6 +7,7 @@ import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
 import {ImageModule} from "primeng/image";
 import {TabViewModule} from "primeng/tabview";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 
 
@@ -21,7 +22,8 @@ import {TabViewModule} from "primeng/tabview";
     ButtonModule,
     RippleModule,
     ImageModule,
-    TabViewModule
+    TabViewModule,
+    ProgressSpinnerModule
   ]
 })
 export class DashboardModule { }

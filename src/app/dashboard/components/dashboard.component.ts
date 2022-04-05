@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   image: any;
   userLogins: Array<LoginDashboardModel> = [];
   userAdministrationDto: Array<UserDto>;
+  waitingForResponse = true;
 
   constructor(
     private router: Router,
@@ -129,16 +130,20 @@ export class DashboardComponent implements OnInit {
 
   getOtherUsers() {
     if (this.userAdministrationDto == undefined) {
+      this.waitingForResponse = true;
       this.userService.dashboardData$Response().pipe(
         map((response: HttpResponse<any>) => {
           if (response.status === 200) {
             this.userAdministrationDto = response.body;
+            this.waitingForResponse = false;
           } else {
             this.messageService.add({severity:'error', summary: 'Error', detail: 'Get users failed!'});
+            this.waitingForResponse = false;
           }
         })
       ).toPromise().then().catch(err => {
         this.messageService.add({severity:'error', summary: 'Error', detail: err.status + ": " + err.statusText});
+        this.waitingForResponse = false;
       });
     }
   }
