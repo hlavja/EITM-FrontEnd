@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
     ).toPromise().then().catch(err => {
       console.log(err);
-      this.messageService.add({severity:'error', summary: 'Error', detail: err.status + ": " + err.statusText});
+      this.messageService.add({severity:'error', summary: 'Error', detail: err.status + ": " + err.statusText + " | " + err.error});
       this.showLoading = false;
     });
 
