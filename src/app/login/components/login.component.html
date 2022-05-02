@@ -13,7 +13,7 @@
                       [allowCameraSwitch]="false"
               ></webcam>
             </div>
-            <div class="form-group">
+<!--            <div class="form-group">
               <label for="email">Email</label>
               <input type="text" formControlName="email" class="form-control" id="email" autocomplete="username"/>
               <span class="text-danger"
@@ -24,7 +24,7 @@
                     *ngIf="loginFormControl.email.touched && loginFormControl.email.errors?.email">
                                 Enter a valid email address
                             </span>
-            </div>
+            </div>-->
             <div class="form-group">
               <button [disabled]="showLoading" class="btn btn-primary">
                 <span *ngIf="showLoading" class="spinner-border spinner-border-sm mr-1"></span>

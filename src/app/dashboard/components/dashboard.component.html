@@ -18,6 +18,7 @@
                   <p-image [src]="image" width="250" [preview]="true"></p-image>
                   <div class="mt-3">
                     <h4>{{userLoginDto?.firstName}} {{userLoginDto?.lastName}}</h4>
+                    <h5>{{userLoginDto?.email}}</h5>
                   </div>
                 </div>
               </div>
@@ -69,6 +70,8 @@
 
                   <div class="col-lg-4 col-md-12">
                     {{userAdmin?.firstName}} {{userAdmin?.lastName}}
+                    <br>
+                    {{userAdmin?.email}}
                     <hr class="my-4">
                     <p-image [src]="getImage(userAdmin?.image)" width="250" [preview]="true"></p-image>
                   </div>

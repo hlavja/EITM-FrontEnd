@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import {BehaviorSubject, Observable, Subject, Subscription} from 'rxjs';
 import { WebcamImage } from 'ngx-webcam';
 import {UserService} from "../../shared/generated/services/user.service";
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   disableSubmitButton$:BehaviorSubject<boolean> = new BehaviorSubject<boolean> (false);
   loginForm: FormGroup = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]]
+    email: ['']
   });
   submitted: boolean;
   subscription: Subscription[] = [];
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login(): void {
     let loginUser: UserLoginDto = {
-      email: this.loginForm.get('email').value,
+      /*email: this.loginForm.get('email').value,*/
       image: this.webcamImage.imageAsBase64
     }
     this.userService.loginUser$Response({body: loginUser}).pipe(
